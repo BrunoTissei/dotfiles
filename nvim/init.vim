@@ -5,8 +5,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-gitgutter'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'sheerun/vim-polyglot'
+    "Plug 'sheerun/vim-polyglot'
     Plug 'vim-airline/vim-airline'
     Plug 'preservim/nerdtree'
     Plug 'tyrannicaltoucan/vim-deep-space'
@@ -181,21 +180,9 @@ nnoremap L gt
 let g:NERDTreeWinSize=45
 
 
-" ============================= Deoplete [plugin] ==============================
-
-let g:python3_host_prog = '/usr/bin/python3'
-
-" Enable deoplete at startup
-let g:deoplete#enable_at_startup = 1
-
-" Disable preview window
-set completeopt-=preview
-
-
 " ============================= Polyglot [plugin] ==============================
 
-let g:polyglot_disabled = ['csv']
-
+" let g:polyglot_disabled = ['csv']
 
 " ================================= Functions ==================================
 
@@ -216,41 +203,3 @@ func! ClipboardYank()
     call system('xclip -i -selection clipboard', @@)
 endfunc
 
-" Simple compilation
-func! CompileNormal()
-    :w
-    set makeprg=g++\ -DLOCAL\ -std=c++17\ -Wall\ -Wextra\ -g\ %
-    :make
-endfunc
-
-" Slower compilation, but sanitized
-func! CompileComplete()
-    :w
-    set makeprg=g++\ -DLOCAL\ -Wall\ -Wextra\ -pedantic\ -std=c++17\ -O2\
-                \ -Wshadow\ -Wformat=2\ -Wfloat-equal\ -Wconversion\
-                \ -Wlogical-op\ -Wshift-overflow=2\ -Wduplicated-cond\
-                \ -Wcast-qual\ -Wcast-align\ -D_GLIBCXX_DEBUG\
-                \ -D_GLIBCXX_DEBUG_PEDANTIC\ -D_FORTIFY_SOURCE=2\
-                \ -fsanitize=address\ -fsanitize=undefined\
-                \ -fno-sanitize-recover\ -fstack-protector\ -g\ %
-    :make
-endfunc
-
-" Create centralized titles
-func! MakeTitle()
-    call inputsave()
-    let comm = input('Enter comment symbol: ')
-    let title = input('Enter title: ')
-    let chars = input('Enter repeating character: ')
-    call inputrestore()
-
-    let title     = " " . title . " "
-    let num_left  = (80 - len(comm) - 1 - len(title)) / 2
-    let num_right = ((80 - len(comm) - 1 - len(title) - 1) / 2) + 1
-
-    call setline('.',
-                \ comm . " " .
-                \ repeat(chars, num_left) .
-                \ title .
-                \ repeat(chars, num_right))
-endfunc
