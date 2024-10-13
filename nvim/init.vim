@@ -4,10 +4,11 @@
 call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-gitgutter'
-    "Plug 'sheerun/vim-polyglot'
+    Plug 'sheerun/vim-polyglot'
     Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
     Plug 'preservim/nerdtree'
-    Plug 'tyrannicaltoucan/vim-deep-space'
+    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
 
 
@@ -116,7 +117,9 @@ cabb Q q
 " Set colorscheme
 set termguicolors
 set background=dark
-colorscheme deep-space
+colorscheme catppuccin-macchiato
+
+let g:airline_theme='minimalist'
 
 " Highlight matching brackets
 set showmatch
